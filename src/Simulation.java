@@ -1,5 +1,10 @@
+import java.util.Random;
+
 public class Simulation {
     public static void main(String[] args) {
-        new RandomRangeGenerator().getProbability();
+
+        RandomGenerator randGen = new RandomGenerator();
+        double[] array = randGen.getCumulativeProbability();
+        randGen.calcRanges(array);
     }
 }
