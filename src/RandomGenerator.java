@@ -8,13 +8,17 @@ import static java.lang.System.out;
 
 public class RandomGenerator {
     ArrayList randRanges = new ArrayList<Range>();
+    ArrayList interArrivalTimesList = new ArrayList<Double>();
+    ArrayList intervalList = new ArrayList<Double>();
+    ArrayList randomNumList = new ArrayList<Double>();
 
 
     public double [] getCumulativeProbability(){
-        out.println("Enter probabilities for the simulation (Press 0,0 to cancel): ");
+        out.println("Enter the time between arrivals and the frequency of occurrence for the simulation (Press 0,0 to cancel): ");
         ArrayList frequencyList = new ArrayList<Double>();
-        ArrayList intervalList = new ArrayList<Double>();
         ArrayList probabilityList = new ArrayList<Double>();
+
+
 
         Scanner scanner = new Scanner(System.in);
 
@@ -47,7 +51,8 @@ public class RandomGenerator {
         for (int i = 0; i < cumulativeProbList.length; i++) {
             sum += (double) probabilityList.get(i);
             sum = (double) Math.round(sum * 1000) / 1000;
-            cumulativeProbList[i] = sum;
+            cumulativeProbList[i] = sum
+            ;
         }
         return cumulativeProbList;
     }
@@ -67,6 +72,24 @@ public class RandomGenerator {
             System.out.println(i);
         }
     }
+
+    ArrayList setRandomNumList (int constant, int randomNum, int modulo, int num){
+        double randomNumbers [] = randomNumberGenerator( constant, randomNum, modulo, num);
+        randomNumList.add(0);
+        for (int i=1; i<num; i++){
+            randomNumList.add(randomNumbers[i]/modulo);
+        }
+
+        return randomNumList;
+    }
+//    void interArrivalTimes (){
+//        Range range = new Range();
+//
+//        for (int i=0;i<randomNumList.size();i++){
+//            if( ((Double)randomNumList.get(i) >= range.lowerlimit  && ((Double)randomNumList.get(i) <= range.upperlimit)))
+//                interArrivalTimesList.add(10);
+//        }
+//    }
 
     public double[] randomNumberGenerator(int constant, int randomNum, int modulo, int num){
         double randomNumbers[] = new double[num];
