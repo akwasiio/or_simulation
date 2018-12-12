@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public class Range {
-    RandomGenerator rnd = new RandomGenerator();
 
     public double getLowerlimit() {
         return lowerlimit;
@@ -11,12 +10,14 @@ public class Range {
         return upperlimit;
     }
 
-    double upperlimit;
-    double lowerlimit;
+   public double upperlimit;
+   public double lowerlimit;
+   public double interval;
 
     Range(){
         this.lowerlimit= 0.0;
         this.upperlimit= 0.0;
+        this.interval = 0.0;
     }
 
     @Override
