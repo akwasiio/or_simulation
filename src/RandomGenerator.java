@@ -1,25 +1,19 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import static java.lang.System.in;
 import static java.lang.System.out;
 
-
 public class RandomGenerator {
-    Range range = new Range();
-    Range[] randRanges = new Range[8];
+    Range[] randRanges = new Range[5];
     ArrayList interArrivalTimesList = new ArrayList<Double>();
     ArrayList intervalList = new ArrayList<Double>();
     ArrayList randomNumList = new ArrayList<Double>();
-
 
     public double[] getCumulativeProbability() {
         out.println("Enter the time between arrivals and the frequency of occurrence for the simulation (Press 0,0 to cancel): ");
         ArrayList frequencyList = new ArrayList<Double>();
         ArrayList probabilityList = new ArrayList<Double>();
-
 
         Scanner scanner = new Scanner(System.in);
 
@@ -29,9 +23,7 @@ public class RandomGenerator {
             double interval = Double.parseDouble(string[0].trim());
             double freq = Double.parseDouble(string[1].trim());
 
-
             if (freq != 0.0) {
-
                 intervalList.add(interval);
                 frequencyList.add(freq);
             } else {
@@ -48,7 +40,6 @@ public class RandomGenerator {
             prob = (double) Math.round(prob * 100) / 100;
             probabilityList.add(prob);
         }
-
 
         double sum = 0.0;
         double[] cumulativeProbList = new double[probabilityList.size()];
@@ -69,9 +60,7 @@ public class RandomGenerator {
             range.interval = (Double) intervalList.get(i - 1);
             randRanges[i-1] = range;
             previousLower = cumProbList[i - 1];
-
         }
-
         for (Range i : randRanges) {
             System.out.println(i);
         }
@@ -79,9 +68,10 @@ public class RandomGenerator {
 
     void interArrivalTimes() {
         for (int i = 0; i < randomNumList.size(); i++) {
-            double random = (double) randomNumList.get(i);
+            double random = (Double) randomNumList.get(i);
 
             for (Range range : randRanges){
+
                 if(random >= range.lowerlimit && random <= range.upperlimit){
                     interArrivalTimesList.add(range.interval);
                 }
@@ -95,9 +85,9 @@ public class RandomGenerator {
             randomNumbers[i] = randomNum / (double) modulo;
             randomNumbers[i] = round(randomNumbers[i], 2);
             randomNum = (constant * randomNum) % modulo;
-        }
-        randomNumList.add(Arrays.asList(randomNumbers));
 
+            randomNumList.add(randomNumbers[i]);
+        }
     }
 
     public static double round(double value, int places) {
@@ -110,8 +100,9 @@ public class RandomGenerator {
     }
 
     void display(){
-        for(int i = 1; i <= 8; i++){
-            out.printf("%d%t%t%t%f%t%t%t%f", i, randomNumList.get(i), interArrivalTimesList.get(i));
+        out.println("ith\t\t\tRandom Number\t\t\tInterArrival Time");
+        for(int i = 0; i < randomNumList.size(); i++){
+            out.println("\n" + (i + 1) + "\t\t\t\t" + randomNumList.get(i) + "\t\t\t\t\t" + interArrivalTimesList.get(i));
         }
     }
 
