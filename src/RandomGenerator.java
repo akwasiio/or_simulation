@@ -18,7 +18,7 @@ public class RandomGenerator {
     private double departureTime[];
     private double timeSpent[];
     private double queue[];
-    Scanner scanner;
+    private Scanner scanner;
 
     private int randomToBeGenerated;
     private int numOfProbs;
@@ -35,31 +35,6 @@ public class RandomGenerator {
 
         randomToBeGenerated = numToBeGenerated;
         numOfProbs = numberOfProbs;
-    }
-
-    private void miscellaneous(String answer) {
-
-        if (answer.toLowerCase().contains("fre")) {
-            convertFrequencyToProbability();
-        } else if (answer.toLowerCase().contains("pro")) {
-            handleProbabilities();
-        }
-
-    }
-
-    private void handleProbabilities() {
-        out.println("Enter the interarrival time and the probability of occurrence for each for the simulation: ");
-        int i = 1;
-        while (i <= numOfProbs) {
-            String input = scanner.nextLine();
-            String string[] = input.trim().split(",");
-            double interval = Double.parseDouble(string[0].trim());
-            double prob = Double.parseDouble(string[1].trim());
-
-            intervalList.add(interval);
-            probabilityList.add(prob);
-            i++;
-        }
     }
 
     private void convertFrequencyToProbability() {
@@ -94,9 +69,16 @@ public class RandomGenerator {
         double[] cumulativeProbList = new double[probabilityList.size()];
         for (int i = 0; i < cumulativeProbList.length; i++) {
             sum += (double) probabilityList.get(i);
-            sum = (double) Math.round(sum * 1000) / 1000;
+            sum = round(sum);
             cumulativeProbList[i] = sum;
         }
+
+//        if(cumulativeProbList[cumulativeProbList.length - 1] != 1){
+//            System.err.println("Cumulative probability does not sum up to 1. Try again.");
+//            convertFrequencyToProbability();
+//
+//        }
+
         return cumulativeProbList;
     }
 
@@ -216,7 +198,7 @@ public class RandomGenerator {
         out.println("Mean Time Spent: " + meanTimeSpent);
     }
 
-    public void runEntireProgram(String answer) {
+    public void runEntireProgram() {
         Scanner scan = new Scanner(System.in);
         out.print("\nEnter the seed value: ");
         int seedValue = scan.nextInt();
@@ -225,7 +207,7 @@ public class RandomGenerator {
         out.print("Enter modulo: ");
         int modulo = scan.nextInt();
 
-        miscellaneous(answer);
+        convertFrequencyToProbability();
         double array[] = computeCumulativeProbability();
         calcRanges(array);
 
